@@ -38,9 +38,9 @@ jobs:
             echo "$file" >> changed-file-list.txt
           done
           touch Traceability_Report.html
-          echo "<!DOCTYPE html><html><head><title>T-Miner Traceability Report</title></head><body><p>Commit Details: " >> Traceability_Report.html
-          git log >> Traceability_Report.html
-          echo "</p><ol>" >> Traceability_Report.html
+          echo "<!DOCTYPE html><html><head><style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style><title>T-Miner Traceability Report</title></head><body><p>Commit Details: </p><table><tr><th>Commit</th><th>User</th><th>Message</th></tr>" >> Traceability_Report.html
+          git log --pretty=format:"<tr><td><a href="https://github.com/WM-SEMERU/csci-435_t_miner/commit/%H">%h</a></td><td>%an</td><td>%s</td></tr>" >> Traceability_Report.html
+          echo "</table><ol>" >> Traceability_Report.html
           python traceability.py $sourcePath $targetList $outputFile $targetThreshold $targetSourceString $targetString $targetSourceValue ${{ github.repository }}
           echo "</ol></body></html>" >> Traceability_Report.html
       - name: Upload changed files list
